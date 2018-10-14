@@ -9,7 +9,6 @@ from tkinter import ttk
 
 app = ClarifaiApp(api_key='##Your API Key Here')
 
-
 def output(Upload):
     food = str(Upload)[26:len(str(Upload))-2]
     model = app.models.get('food-items-v1.0')
