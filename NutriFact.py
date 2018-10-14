@@ -116,7 +116,7 @@ def userinput(name):
         elif missing.upper() == "Y":
             win2 = tk.Tk()
             win2.title("Python GUI")
-            win.resizable(0, 0)
+            win2.resizable(0, 0)
 
             dLabel = ttk.Label(win2, text="A Label")
             dLabel.grid(column=0, row=0)
