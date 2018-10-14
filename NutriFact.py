@@ -286,3 +286,4 @@ def graph(d):
 
 x = read('data.txt')
 graph(x)
+
