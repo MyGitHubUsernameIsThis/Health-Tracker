@@ -18,3 +18,4 @@ canvas.create_image(20, 20, anchor=NW, image=img)
 root.mainloop()
 
 
+# I am adding this part to see if I am pushing to GitHub correctly.
