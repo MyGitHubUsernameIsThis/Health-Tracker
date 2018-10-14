@@ -3,10 +3,11 @@ from clarifai.rest import ClarifaiApp
 import csv
 import tkinter as tk
 import datetime
+import Graph
 from tkinter import ttk
 
 
-app = ClarifaiApp(api_key='3186a73fc35242df941c98e012ef2e2c')
+app = ClarifaiApp(api_key='##Your API Key Here')
 
 
 def output(Upload):
@@ -52,7 +53,7 @@ def userinput(name):
         count += 1
     win = tk.Tk()
     win.title("Python GUI")
-    # win.resizable(0, 0)
+    win.resizable(0, 0)
 
     aLabel = ttk.Label(win, text="Please enter food number separated by comma then space (Ex: 1, 3, 5)")
     aLabel.grid(column=0, row=0)
@@ -70,7 +71,6 @@ def userinput(name):
 
     action = ttk.Button(win, text="Click", command=quit)
     action.grid(column=1, row=1)
-    # action.configure(state='disabled')
 
     win.mainloop()
 
@@ -117,7 +117,7 @@ def userinput(name):
         elif missing.upper() == "Y":
             win2 = tk.Tk()
             win2.title("Python GUI")
-            # win.resizable(0, 0)
+            win.resizable(0, 0)
 
             dLabel = ttk.Label(win2, text="A Label")
             dLabel.grid(column=0, row=0)
@@ -155,6 +155,29 @@ def display(cals, sugar, fats):
     Label3.grid(column=0, row=2)
     Label3.config(font=("Courier", 44))
 
+
+    cLabel = ttk.Label(win, text="Would you like to see the graph of the eaten calories for the previous days?")
+    cLabel.grid(column=0, row=3)
+    cLabel.config(font=("Courier", 20))
+
+    def clickyes():
+        win.destroy()
+        d = Graph.read('data.txt')
+        Graph.graph(d)
+
+
+
+    def clickno():
+        print("See you next time!")
+        win.destroy()
+
+    action_yes = ttk.Button(win, text="Yes", command=clickyes)
+    action_yes.grid(column=1, row=3)
+    action_no = ttk.Button(win, text="No", command=clickno)
+    action_no.grid(column=2, row=3)
+
+    win.mainloop()
+
 def findCalories(items, foodDictionary):
     finalItems = []
     retCal = 0
@@ -177,7 +200,7 @@ def findCalories(items, foodDictionary):
         from tkinter import ttk
         win3 = tk.Tk()
         win3.title("Python GUI")
-        # win.resizable(0, 0)
+        win3.resizable(0, 0)
 
         eLabel = ttk.Label(win3, text="Please select the type of " + eachItem + " you ate")
         eLabel.grid(column=0, row=1)
@@ -194,14 +217,12 @@ def findCalories(items, foodDictionary):
 
         action = ttk.Button(win3, text="Click", command=quit)
         action.grid(column=0, row=3)
-        # action.configure(state='disabled')
 
         win3.mainloop()
         toPut = int(toAdd.get())
 
 
         print(", ".join(printedPossibilities[0:10]))
-        # toAdd = int(input("Please select the type of " + eachItem + " you ate"))
         finalItems.append(possibilities[toPut-1])
 
     for food in finalItems:
@@ -228,8 +249,6 @@ def readFile():
         ingredients = userinput(names)
         findCalories(ingredients, foodDict)
 
-
-
 if __name__ == '__main__':
     root = tk.Tk()
     frame = tk.Frame(root)
@@ -251,39 +270,3 @@ if __name__ == '__main__':
     fileSelection.pack(side=tk.LEFT)
 
     root.mainloop()
-
-
------------------------------------------------
-
-import matplotlib.pyplot as plt
-import numpy as np
-
-def read(fileName):
-    f = open(fileName)
-    caloriesPerDay = {}
-    for line in f:
-        data = line.split(":")
-        day = int(data[0])
-        calories = float(data[1])
-        if day not in caloriesPerDay.keys():
-            caloriesPerDay[day] = 0
-        caloriesPerDay[day] += calories
-    return(caloriesPerDay)
-
-def graph(d):
-    days = []
-    calories = []
-    for k,v in d.items():
-        days.append(k)
-        calories.append(v)
-    newDays = [days[x] - days[0] + 1 for x in range(len(days))]
-    plt.scatter(newDays, calories)
-    plt.title("Calories per Day")
-    plt.plot(newDays, calories)
-    plt.axis([0,len(days) + 1, 0, max(calories) + 100])
-    plt.show()
-
-
-x = read('data.txt')
-graph(x)
-
