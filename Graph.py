@@ -23,7 +23,10 @@ def graph(d):
     plt.scatter(newDays, calories)
     plt.title("Calories per Day")
     plt.plot(newDays, calories)
-    plt.axis([0, len(days) + 1, 0, max(calories) + 100])
+    plt.xlim([0, len(days) + 1])
+    plt.ylim([0, max(calories) + 100])
+    plt.xticks(np.arange(0, len(days) + 1, 1))
+    plt.yticks(np.arange(0, max(calories) + 100, 100))
     plt.show()
 
 
